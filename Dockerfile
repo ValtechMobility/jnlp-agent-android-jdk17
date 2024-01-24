@@ -24,9 +24,6 @@ RUN apt-get update && apt-get install -y \
     wget \
     gradle \
     maven \
-    python3 \
-    python3-pip \
-    python3-venv \
     git \
     tar \
     openssh-client \
@@ -36,15 +33,26 @@ RUN apt-get update && apt-get install -y \
 # "fix" pips -> error: externally-managed-environment
 ENV PIP_BREAK_SYSTEM_PACKAGES 1
 
-RUN pip3 install mkdocs
-# backstage compat
-RUN pip3 install mkdocs-techdocs-core
+# python
+ENV PY_VERSION=3.9.18
+RUN mkdir /python && cd /python && \
+    wget "https://www.python.org/ftp/python/${PY_VERSION}/Python-${PY_VERSION}.tgz" && \
+    tar -zxvf "Python-${PY_VERSION}.tgz" && \
+    cd "Python-${PY_VERSION}" && \
+    ls -lhR && \
+    ./configure --enable-optimizations && \
+    make install && \
+    rm -rf /python
 
-#simplify doc generation, https://github.com/lukasgeiter/mkdocs-awesome-pages-plugin
-RUN pip3 install mkdocs-awesome-pages-plugin
-
-#showing date created and updated on every page, https://github.com/timvink/mkdocs-git-revision-date-localized-plugin
-RUN pip3 install mkdocs-git-revision-date-localized-plugin
+# mkdocs
+# mkdocs-techdocs-core - backstage compat
+# simplify doc generation, https://github.com/lukasgeiter/mkdocs-awesome-pages-plugin
+# showing date created and updated on every page, https://github.com/timvink/mkdocs-git-revision-date-localized-plugin
+RUN pip3 install \
+    mkdocs \
+    mkdocs-techdocs-core \
+    mkdocs-awesome-pages-plugin \
+    mkdocs-git-revision-date-localized-plugin
 
 # plantuml
 ENV PLANTUML_VERSION=1.2023.2

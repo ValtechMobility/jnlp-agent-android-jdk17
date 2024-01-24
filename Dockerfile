@@ -14,24 +14,28 @@ COPY --from=jnlp /usr/local/bin/jenkins-agent /usr/local/bin/jenkins-agent
 RUN chmod +x /usr/local/bin/jenkins-agent && \
     ln -s /usr/local/bin/jenkins-agent /usr/local/bin/jenkins-slave
 
+# FYI reduce RUN calls -> minimize image sizes, avoid creating layers with unnecessary cached files
+
+RUN apt-get update && \
+    apt-get upgrade -y && \
+    apt-get install -y --no-install-recommends curl gcc g++ gnupg unixodbc-dev openssl git && \
+    apt-get install -y software-properties-common ca-certificates && \
+    apt-get install -y build-essential zlib1g-dev libncurses5-dev libgdbm-dev libssl-dev libreadline-dev libffi-dev wget libbz2-dev libsqlite3-dev && \
+    update-ca-certificates
+
 # For maven install issue -> "error: error creating symbolic link '/usr/share/man/man1/mvn.1.gz.dpkg-tmp': No such file or directory"
 RUN mkdir -p /usr/share/man/man1
 
-RUN apt-get update && apt-get install -y \
-    unzip \
-    curl \
+RUN apt-get install -y \
     rsync \
-    wget \
+    unzip \
+    tar \
     gradle \
     maven \
-    git \
-    tar \
+    wget \
     openssh-client \
     ca-certificates-java \
     openjdk-17-jdk
-
-# "fix" pips -> error: externally-managed-environment
-ENV PIP_BREAK_SYSTEM_PACKAGES 1
 
 # python
 ENV PY_VERSION=3.9.18

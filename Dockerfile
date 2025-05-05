@@ -35,7 +35,8 @@ RUN apt-get install -y \
     wget \
     openssh-client \
     ca-certificates-java \
-    openjdk-17-jdk
+    openjdk-17-jdk \
+    jq
 
 # python
 ENV PY_VERSION=3.9.18

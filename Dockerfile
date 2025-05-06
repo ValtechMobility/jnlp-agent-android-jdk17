@@ -103,7 +103,7 @@ ENV PATH ${PATH}:${ANDROID_SDK_ROOT}/platform-tools:${ANDROID_SDK_ROOT}/cmdline-
 # Non-standard components: MIPS system images, preview versions, GDK (Google Glass) and Android Google TV require separate licenses, not accepted there
 RUN yes | sdkmanager --update
 RUN yes | sdkmanager --licenses
-RUN sdkmanager "platform-tools"
+RUN sdkmanager "platform-tools" "platforms;android-34" "build-tools;34.0.0" "platforms;android-33" "build-tools;33.0.2"
 RUN sdkmanager --install "ndk;25.1.8937393" "cmake;3.22.1"
 
 # Please keep all sections in descending order!

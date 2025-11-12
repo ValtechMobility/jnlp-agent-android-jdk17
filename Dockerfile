@@ -37,7 +37,8 @@ RUN apt-get install -y \
     ca-certificates-java \
     openjdk-17-jdk \
     xmllint \
-    xpath
+    xpath \
+    jq
 
 # python
 ENV PY_VERSION=3.9.18
@@ -104,12 +105,12 @@ ENV PATH ${PATH}:${ANDROID_SDK_ROOT}/platform-tools:${ANDROID_SDK_ROOT}/cmdline-
 # Non-standard components: MIPS system images, preview versions, GDK (Google Glass) and Android Google TV require separate licenses, not accepted there
 RUN yes | sdkmanager --update
 RUN yes | sdkmanager --licenses
-RUN sdkmanager "platform-tools"
+RUN sdkmanager "platform-tools" "platforms;android-34" "build-tools;34.0.0" "platforms;android-33" "build-tools;33.0.2"
 RUN sdkmanager --install "ndk;25.1.8937393" "cmake;3.22.1"
 
 # Please keep all sections in descending order!
 # list all platforms, sort them in descending order, take the newest 8 versions and install them
-RUN yes | sdkmanager $( sdkmanager --list 2>/dev/null| grep platforms | awk -F' ' '{print $1}' | sort -nr -k2 -t- | head -8 | uniq )
+RUN yes | sdkmanager $( sdkmanager --list 2>/dev/null| grep platforms | grep -v "\-ext" | awk -F' ' '{print $1}' | sort -nr -k2 -t- | head -8 | uniq )
 # list all build-tools, sort them in descending order and install them
 # skip rc versions, increase head count - versions are found twice (actual matches will now be ~5)
 RUN yes | sdkmanager $( sdkmanager --list 2>/dev/null | grep build-tools | grep -v "\-rc" | awk -F' ' '{print $1}' | sort -nr -k2 -t\; | head -10 | uniq )

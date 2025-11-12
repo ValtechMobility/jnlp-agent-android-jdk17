@@ -36,6 +36,8 @@ RUN apt-get install -y \
     openssh-client \
     ca-certificates-java \
     openjdk-17-jdk \
+    xmllint \
+    xpath \
     jq
 
 # python

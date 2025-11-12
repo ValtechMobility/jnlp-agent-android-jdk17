@@ -20,7 +20,7 @@ RUN chmod +x /usr/local/bin/jenkins-agent && \
 RUN apt-get update && \
     apt-get upgrade -y && \
     apt-get install -y --no-install-recommends curl gcc g++ gnupg unixodbc-dev openssl git && \
-    apt-get install -y software-properties-common ca-certificates && \
+    apt-get install -y ca-certificates && \
     apt-get install -y build-essential zlib1g-dev libncurses5-dev libgdbm-dev libssl-dev libreadline-dev libffi-dev wget libbz2-dev libsqlite3-dev && \
     update-ca-certificates
 
@@ -79,13 +79,17 @@ RUN mv gitversion /usr/local/bin
 RUN chmod +x /usr/local/bin/gitversion
 
 # Dependencies to execute Android builds
-RUN apt-get update -qq
-RUN dpkg --add-architecture i386 && apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install -y \
-    libc6:i386 \
-    libgcc1:i386 \
-    libncurses5:i386 \
-    libstdc++6:i386 \
-    libz1:i386
+RUN dpkg --add-architecture i386 \
+    && add-apt-repository universe \
+    && apt-get update \
+    && DEBIAN_FRONTEND=noninteractive apt-get install -y \
+        libncurses5:i386 \
+        libgcc1:i386 \
+        libc6:i386 \
+        libstdc++6:i386 \
+        lib32z1 \
+    && apt-get clean \
+    && rm -rf /var/lib/apt/lists/*
 
 SHELL ["/bin/bash", "-c"]
 

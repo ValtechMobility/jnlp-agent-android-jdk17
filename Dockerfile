@@ -78,9 +78,6 @@ RUN chmod +x /usr/local/bin/gitversion
 
 # Dependencies to execute Android builds
 RUN dpkg --add-architecture i386 \
-    && apt-get update \
-    && DEBIAN_FRONTEND=noninteractive apt-get install -y \
-        software-properties-common \
     && add-apt-repository universe \
     && apt-get update \
     && DEBIAN_FRONTEND=noninteractive apt-get install -y \

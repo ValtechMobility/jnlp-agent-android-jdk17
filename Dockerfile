@@ -1,6 +1,7 @@
 FROM jenkins/inbound-agent:alpine as jnlp
 
-FROM jenkins/agent:latest-jdk17
+#jdk17 from July'25
+FROM jenkins/agent:3309.v27b_9314fd1a_4‑7‑jdk17
 
 ARG version
 LABEL Description="This is a base image, which allows connecting Jenkins agents via JNLP protocols" Vendor="Jenkins project" Version="$version"
@@ -35,6 +36,7 @@ RUN apt-get install -y \
     wget \
     openssh-client \
     ca-certificates-java \
+    openjdk-17-jdk \
     libxml2-utils \
     libxml-xpath-perl \
     jq

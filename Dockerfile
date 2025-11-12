@@ -19,7 +19,7 @@ RUN chmod +x /usr/local/bin/jenkins-agent && \
 RUN apt-get update && \
     apt-get upgrade -y && \
     apt-get install -y --no-install-recommends curl gcc g++ gnupg unixodbc-dev openssl git && \
-    apt-get install -y software-properties-common ca-certificates && \
+    apt-get install -y ca-certificates && \
     apt-get install -y build-essential zlib1g-dev libncurses5-dev libgdbm-dev libssl-dev libreadline-dev libffi-dev wget libbz2-dev libsqlite3-dev && \
     update-ca-certificates
 

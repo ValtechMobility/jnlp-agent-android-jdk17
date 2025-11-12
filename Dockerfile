@@ -36,6 +36,7 @@ RUN apt-get install -y \
     wget \
     openssh-client \
     ca-certificates-java \
+    openjdk-17-jdk \
     libxml2-utils \
     libxml-xpath-perl \
     jq

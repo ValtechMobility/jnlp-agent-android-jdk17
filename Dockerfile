@@ -35,9 +35,8 @@ RUN apt-get install -y \
     wget \
     openssh-client \
     ca-certificates-java \
-    openjdk-17-jdk \
-    xmllint \
-    xpath \
+    libxml2-utils \
+    libxml-xpath-perl \
     jq
 
 # python

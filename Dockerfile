@@ -77,13 +77,20 @@ RUN mv gitversion /usr/local/bin
 RUN chmod +x /usr/local/bin/gitversion
 
 # Dependencies to execute Android builds
-RUN apt-get update -qq
-RUN dpkg --add-architecture i386 && apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install -y \
-    libc6:i386 \
-    libgcc1:i386 \
-    libncurses5:i386 \
-    libstdc++6:i386 \
-    libz1:i386
+RUN dpkg --add-architecture i386 \
+    && apt-get update \
+    && DEBIAN_FRONTEND=noninteractive apt-get install -y \
+        software-properties-common \
+    && add-apt-repository universe \
+    && apt-get update \
+    && DEBIAN_FRONTEND=noninteractive apt-get install -y \
+        libncurses5:i386 \
+        libgcc1:i386 \
+        libc6:i386 \
+        libstdc++6:i386 \
+        lib32z1 \
+    && apt-get clean \
+    && rm -rf /var/lib/apt/lists/*
 
 SHELL ["/bin/bash", "-c"]
 

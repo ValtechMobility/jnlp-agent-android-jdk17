@@ -41,7 +41,7 @@ RUN apt-get install -y \
     libxml-xpath-perl \
     jq
 
-# python
+# python 3.9
 ENV PY_VERSION=3.9.18
 RUN mkdir /python && cd /python && \
     wget "https://www.python.org/ftp/python/${PY_VERSION}/Python-${PY_VERSION}.tgz" && \
@@ -51,6 +51,16 @@ RUN mkdir /python && cd /python && \
     ./configure --enable-optimizations && \
     make install && \
     rm -rf /python
+
+# Python 3.12
+ENV PY_VERSION2=3.12.12
+RUN mkdir /python2 && cd /python2 && \
+    wget "https://www.python.org/ftp/python/${PY_VERSION2}/Python-${PY_VERSION2}.tgz" && \
+    tar -zxvf "Python-${PY_VERSION2}.tgz" && \
+    cd "Python-${PY_VERSION2}" && \
+    ./configure --enable-optimizations && \
+    make altinstall && \
+    rm -rf /python2
 
 # mkdocs
 # mkdocs-techdocs-core - backstage compat

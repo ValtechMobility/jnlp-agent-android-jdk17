@@ -42,7 +42,7 @@ RUN apt-get install -y \
     jq
 
 # python 3.9
-ENV PY_VERSION=3.9.18
+ENV PY_VERSION=3.12.12
 RUN mkdir /python && cd /python && \
     wget "https://www.python.org/ftp/python/${PY_VERSION}/Python-${PY_VERSION}.tgz" && \
     tar -zxvf "Python-${PY_VERSION}.tgz" && \
@@ -51,16 +51,6 @@ RUN mkdir /python && cd /python && \
     ./configure --enable-optimizations && \
     make install && \
     rm -rf /python
-
-# Python 3.12
-ENV PY_VERSION3=3.12.12
-RUN mkdir /python3 && cd /python3 && \
-    wget "https://www.python.org/ftp/python/${PY_VERSION3}/Python-${PY_VERSION3}.tgz" && \
-    tar -zxvf "Python-${PY_VERSION3}.tgz" && \
-    cd "Python-${PY_VERSION3}" && \
-    ./configure --enable-optimizations && \
-    make altinstall && \
-    rm -rf /python3
 
 # mkdocs
 # mkdocs-techdocs-core - backstage compat

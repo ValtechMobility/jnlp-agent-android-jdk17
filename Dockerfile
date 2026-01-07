@@ -42,7 +42,7 @@ RUN apt-get install -y \
     jq
 
 # python
-ENV PY_VERSION=3.9.18
+ENV PY_VERSION=3.12.12
 RUN mkdir /python && cd /python && \
     wget "https://www.python.org/ftp/python/${PY_VERSION}/Python-${PY_VERSION}.tgz" && \
     tar -zxvf "Python-${PY_VERSION}.tgz" && \

@@ -52,6 +52,17 @@ RUN mkdir /python && cd /python && \
     make install && \
     rm -rf /python
 
+# ESO-API
+# Feature: AAAM-5142 install eso-api for automated delivery uploads
+RUN wget https://etf.esolutions.de/api/get/pip/lib_etf-2.7.2.tar.gz --no-check-certificate \
+    https://etf.esolutions.de/api/get/pip/etf-1.6.0.tar.gz --no-check-certificate
+
+RUN pip3 install \
+    requests \
+    'cryptography>=3.1' \
+    lib_etf-2.7.2.tar.gz \
+    etf-1.6.0.tar.gz    
+
 # mkdocs
 # mkdocs-techdocs-core - backstage compat
 # simplify doc generation, https://github.com/lukasgeiter/mkdocs-awesome-pages-plugin
